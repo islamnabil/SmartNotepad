@@ -31,8 +31,11 @@ class NoteTableCell: UITableViewCell {
     }
     
     //MARK:- Private Methods
+   
     
     //MARK:- Public Methods
-    
+     func configureView(){
+        
+    }
     
 }
