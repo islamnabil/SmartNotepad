@@ -17,10 +17,15 @@ class NotesVC: UIViewController {
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNoteTable()
+    }
+    
+    //MARK:- Private Methods
+    fileprivate func configureNoteTable() {
+        notesTableView.register(UINib(nibName: "NoteTableCell", bundle: nil), forCellReuseIdentifier: "NoteTableCell")
         notesTableView.delegate = self
         notesTableView.dataSource = self
     }
-    
     
 }
 
@@ -32,13 +37,14 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let  cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ServiceReviewTableCell.self),for: indexPath) as! ServiceReviewTableCell
+        let  cell = tableView.dequeueReusableCell(withIdentifier: String(describing: NoteTableCell.self),for: indexPath) as! NoteTableCell
+        cell.nearestLabel.isHidden = (indexPath.row != 0)
         cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       return 100
+       return 65
     }
     
 }

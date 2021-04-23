@@ -8,9 +8,7 @@
 import UIKit
 
 class NoteTableCell: UITableViewCell {
-    //MARK:- Properties
-    
-    
+
     //MARK:- IBOutlets
     @IBOutlet weak var noteTitleLabel: UILabel!
     @IBOutlet weak var noteBodyLabel: UILabel!

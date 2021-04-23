@@ -82,6 +82,7 @@
 			children = (
 				6914C9F42632C8D600C8D4D9 /* AppDelegate.swift */,
 				6914C9F62632C8D600C8D4D9 /* SceneDelegate.swift */,
+				6914CA022632C8D800C8D4D9 /* Info.plist */,
 				6914CA0E2632E5D400C8D4D9 /* Models */,
 				6914CA0F2632E5DE00C8D4D9 /* Views */,
 				6914CA102632E5E300C8D4D9 /* Controllers */,
@@ -129,7 +130,6 @@
 		6914CA122632E6C700C8D4D9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				6914CA022632C8D800C8D4D9 /* Info.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
