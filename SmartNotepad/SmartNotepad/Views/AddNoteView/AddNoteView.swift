@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddNoteViewDelegate {
-    func addNote()
+    func addNoteButtonAction()
 }
 
 class AddNoteView: UIView {
@@ -17,7 +17,7 @@ class AddNoteView: UIView {
     
     //MARK:- IBActions
     @IBAction func addNote(_ sender: Any) {
-        delegate?.addNote()
+        delegate?.addNoteButtonAction()
     }
     
 }

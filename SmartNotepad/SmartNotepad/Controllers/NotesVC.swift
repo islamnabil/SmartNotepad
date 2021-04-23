@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class NotesVC: UIViewController {
     //MARK:- Properties
-    
+    var notes = try! Realm().objects(NoteModel.self)
     
     //MARK:- IBOutlets
     @IBOutlet weak var notesTableView: UITableView!
@@ -18,21 +19,33 @@ class NotesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNoteTable()
-        notesTableView.backgroundView = createAddNoteView()
-        
     }
     
-    
-    func createAddNoteView() -> AddNoteView {
-        let view = UINib(nibName: "AddNoteView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! AddNoteView
-        return view
-    }
     
     //MARK:- Private Methods
     fileprivate func configureNoteTable() {
         notesTableView.register(UINib(nibName: "NoteTableCell", bundle: nil), forCellReuseIdentifier: "NoteTableCell")
         notesTableView.delegate = self
         notesTableView.dataSource = self
+        notes.count == 0 ? setupEmptyNotesView() : setupNonEmptyNotesView()
+    }
+    
+    fileprivate func createAddNoteView() -> AddNoteView {
+        let addNoteView = UINib(nibName: "AddNoteView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! AddNoteView
+        addNoteView.delegate = self
+        return addNoteView
+    }
+    
+    fileprivate func setupEmptyNotesView(){
+        self.navigationController?.navigationBar.isHidden = true
+        notesTableView.backgroundView = createAddNoteView()
+        notesTableView.separatorStyle = .none
+    }
+    
+    fileprivate func setupNonEmptyNotesView(){
+        self.navigationController?.navigationBar.isHidden = false
+        notesTableView.backgroundView = nil
+        notesTableView.separatorStyle = .singleLine
     }
     
 }
@@ -41,11 +54,12 @@ class NotesVC: UIViewController {
 extension NotesVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return notes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let  cell = tableView.dequeueReusableCell(withIdentifier: String(describing: NoteTableCell.self),for: indexPath) as! NoteTableCell
+        cell.configureView(note: notes[indexPath.row])
         cell.nearestLabel.isHidden = (indexPath.row != 0)
         cell.selectionStyle = .none
         return cell
@@ -55,5 +69,12 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource{
        return 65
     }
     
+}
+
+// MARK: - AddNoteView Delegate
+extension NotesVC: AddNoteViewDelegate {
+    func addNoteButtonAction() {
+        
+    }
 }
 

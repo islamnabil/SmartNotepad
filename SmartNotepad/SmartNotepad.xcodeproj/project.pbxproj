@@ -19,6 +19,7 @@
 		6914CA252632ECFA00C8D4D9 /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6914CA242632ECFA00C8D4D9 /* NoteModel.swift */; };
 		6914CA322632F53600C8D4D9 /* AddNoteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6914CA312632F53600C8D4D9 /* AddNoteView.xib */; };
 		6914CA352632F54500C8D4D9 /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6914CA342632F54500C8D4D9 /* AddNoteView.swift */; };
+		6914CA382632FD6200C8D4D9 /* NoteDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6914CA372632FD6200C8D4D9 /* NoteDetailsVC.swift */; };
 		E28E413B5FE21482E916DF71 /* Pods_SmartNotepad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AA10DB523A54EB3445232DA /* Pods_SmartNotepad.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		6914CA242632ECFA00C8D4D9 /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
 		6914CA312632F53600C8D4D9 /* AddNoteView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNoteView.xib; sourceTree = "<group>"; };
 		6914CA342632F54500C8D4D9 /* AddNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteView.swift; sourceTree = "<group>"; };
+		6914CA372632FD6200C8D4D9 /* NoteDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsVC.swift; sourceTree = "<group>"; };
 		7275F2D15CE2181C3FDFECEB /* Pods-SmartNotepad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartNotepad.release.xcconfig"; path = "Target Support Files/Pods-SmartNotepad/Pods-SmartNotepad.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				6914CA152632E76300C8D4D9 /* NotesVC.swift */,
+				6914CA372632FD6200C8D4D9 /* NoteDetailsVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				6914C9F52632C8D600C8D4D9 /* AppDelegate.swift in Sources */,
 				6914CA252632ECFA00C8D4D9 /* NoteModel.swift in Sources */,
 				6914CA202632E8A800C8D4D9 /* NoteTableCell.swift in Sources */,
+				6914CA382632FD6200C8D4D9 /* NoteDetailsVC.swift in Sources */,
 				6914CA162632E76300C8D4D9 /* NotesVC.swift in Sources */,
 				6914C9F72632C8D600C8D4D9 /* SceneDelegate.swift in Sources */,
 				6914CA352632F54500C8D4D9 /* AddNoteView.swift in Sources */,
