@@ -31,11 +31,19 @@ class NoteTableCell: UITableViewCell {
     }
     
     //MARK:- Private Methods
-   
+    fileprivate func isHasImage(note:NoteModel) -> Bool {
+        return note.image != ""
+    }
+    fileprivate func isHasLocationAddress(note:NoteModel) -> Bool {
+        return note.locationAddress != ""
+    }
     
     //MARK:- Public Methods
-     func configureView(){
-        
+    func configureView(note:NoteModel){
+        noteTitleLabel.text = note.title
+        noteBodyLabel.text = note.body
+        noteImage.isHidden = !isHasImage(note: note)
+        pinImage.isHidden = !isHasLocationAddress(note: note)
     }
     
 }
