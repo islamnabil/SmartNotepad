@@ -7,10 +7,12 @@
 
 import UIKit
 import RealmSwift
+import CoreLocation
 
 class NotesVC: UIViewController {
     //MARK:- Properties
-    var notes = try! Realm().objects(NoteModel.self)
+    fileprivate var notes : Results<NoteModel>?
+    fileprivate var locationManager = CLLocationManager()
     
     //MARK:- IBOutlets
     @IBOutlet weak var notesTableView: UITableView!
@@ -22,7 +24,13 @@ class NotesVC: UIViewController {
         configureNoteTable()
     }
     override func viewWillAppear(_ animated: Bool) {
-        notes.count == 0 ? setupEmptyNotesView() : setupNonEmptyNotesView()
+        fetchData()
+        if notes?.count == 0 {
+            setupEmptyNotesView()
+        }else {
+            setupNonEmptyNotesView()
+            setupLocation()
+        }
     }
     
     //MARK:- IBActions
@@ -31,6 +39,12 @@ class NotesVC: UIViewController {
     }
     
     //MARK:- Private Methods
+    fileprivate func fetchData(){
+        notes = try! Realm().objects(NoteModel.self)
+            .sorted(byKeyPath: "createdAt", ascending: false)
+        notesTableView.reloadData()
+    }
+    
     fileprivate func configureNoteTable() {
         notesTableView.register(UINib(nibName: "NoteTableCell", bundle: nil), forCellReuseIdentifier: "NoteTableCell")
         notesTableView.delegate = self
@@ -55,18 +69,39 @@ class NotesVC: UIViewController {
         notesTableView.separatorStyle = .singleLine
     }
     
+    fileprivate func setupLocation(){
+        self.locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            switch locationManager.authorizationStatus {
+            case .restricted, .denied:
+                break
+            case .authorizedAlways, .authorizedWhenInUse, .notDetermined:
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.startUpdatingLocation()
+            @unknown default:
+                break
+            }
+        }
+    }
+    
+    fileprivate func sortNotes(location:CLLocation){
+        
+    }
+    
+    
 }
 
 // MARK: - UITableView Delegate
 extension NotesVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notes.count
+        return notes?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let  cell = tableView.dequeueReusableCell(withIdentifier: String(describing: NoteTableCell.self),for: indexPath) as! NoteTableCell
-        cell.configureView(note: notes[indexPath.row])
+        cell.configureView(note: notes?[indexPath.row] ?? NoteModel())
         cell.nearestLabel.isHidden = (indexPath.row != 0)
         cell.selectionStyle = .none
         return cell
@@ -76,6 +111,9 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource{
         return 65
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        pushNoteDetailsVC(note: notes?[indexPath.row] ?? NoteModel())
+    }
 }
 
 // MARK: - AddNoteView Delegate
@@ -85,3 +123,13 @@ extension NotesVC: AddNoteViewDelegate {
     }
 }
 
+// MARK: - CLLocationManagerDelegate
+extension NotesVC: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if locations.first != nil {
+            self.sortNotes(location: locations.first!)
+        }
+    }
+    
+}

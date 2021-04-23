@@ -7,11 +7,16 @@
 
 import UIKit
 import CoreLocation
+import RealmSwift
 
 class NoteDetailsVC: UIViewController {
     // MARK: - Properties
     fileprivate var note:NoteModel?
     fileprivate var locationManager = CLLocationManager()
+    fileprivate var noteLat:Double?
+    fileprivate var noteLong:Double?
+    fileprivate var noteImagePath:String?
+    fileprivate let realm = try! Realm()
     
     // MARK: - IBOutlets
     @IBOutlet weak var noteTitleTextField: UITextField!
@@ -49,7 +54,7 @@ class NoteDetailsVC: UIViewController {
             setAddress(address: note?.locationAddress ?? "")
         }
         if note?.image != "" {
-            setNoteImage(imageName: URL(string: note?.image ?? "")!)
+            setNoteImage(imagePath: URL(string: note?.image ?? "")!)
         }
     }
     
@@ -58,8 +63,9 @@ class NoteDetailsVC: UIViewController {
         addLocationButton.setTitleColor(.black, for: .normal)
     }
     
-    fileprivate func setNoteImage(imageName:URL){
-        let image = loadImage(fileURL: imageName)
+    fileprivate func setNoteImage(imagePath:URL){
+        noteImagePath = imagePath.absoluteString
+        let image = loadImage(fileURL: imagePath)
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x: 60, y: 10, width: 200, height: 100)
         imageView.contentMode = .scaleAspectFill
@@ -84,6 +90,19 @@ class NoteDetailsVC: UIViewController {
         }
     }
     
+    fileprivate func addNote(){
+        try! realm.write {
+            note?.title = noteTitleTextField.text ?? ""
+            note?.body = noteBodyTextView.text ?? ""
+            note?.image = noteImagePath ?? ""
+            note?.latitude = noteLat ?? Double()
+            note?.longitude = noteLong ?? Double()
+            note?.locationAddress = addLocationButton.titleLabel?.text ?? ""
+            note?.createdAt = Date()
+            realm.add(note ?? NoteModel())
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
     
     // MARK: - showEnableLocationServices
     fileprivate func showEnableLocationServices() {
@@ -116,6 +135,8 @@ class NoteDetailsVC: UIViewController {
             let alert = UIAlertController(title: "Fill all fields", message: "Please fill all fiedls", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
             present(alert, animated: true, completion: nil)
+        }else {
+            addNote()
         }
     }
     
@@ -151,8 +172,10 @@ extension NoteDetailsVC: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locations.first != nil {
-            CLGeocoder().reverseGeocodeLocation(manager.location ?? CLLocation()) { (placemarks, err) in
+            CLGeocoder().reverseGeocodeLocation(locations.first ?? CLLocation()) { (placemarks, err) in
                 if placemarks?.count ?? 0 > 0 {
+                    self.noteLat = locations.first?.coordinate.latitude ?? Double()
+                    self.noteLong = locations.first?.coordinate.longitude ?? Double()
                     self.setAddress(address: "\(placemarks?[0].locality ?? ""), \(placemarks?[0].country ?? "")")
                 }
             }
@@ -205,8 +228,7 @@ extension NoteDetailsVC: UIImagePickerControllerDelegate, UINavigationController
             let data = image.pngData()! as NSData
                data.write(toFile: localPath!, atomically: true)
                let photoURL = URL.init(fileURLWithPath: localPath!)
-               print(photoURL)
-            self.setNoteImage(imageName: photoURL)
+            self.setNoteImage(imagePath: photoURL)
            }
         picker.dismiss(animated: true, completion: nil)
     }
