@@ -3,5 +3,6 @@ use_frameworks!
 target 'SmartNotepad' do
 
  pod 'RealmSwift'
+ pod 'IQKeyboardManagerSwift'
 
 end
