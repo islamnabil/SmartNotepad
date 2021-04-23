@@ -18,6 +18,14 @@ class NotesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNoteTable()
+        notesTableView.backgroundView = createAddNoteView()
+        
+    }
+    
+    
+    func createAddNoteView() -> AddNoteView {
+        let view = UINib(nibName: "AddNoteView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! AddNoteView
+        return view
     }
     
     //MARK:- Private Methods
@@ -33,7 +41,7 @@ class NotesVC: UIViewController {
 extension NotesVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

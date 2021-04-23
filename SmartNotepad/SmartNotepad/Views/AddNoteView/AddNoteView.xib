@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AddNoteView" customModule="SmartNotepad" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HNp-NG-8Gf">
+                    <rect key="frame" x="70" y="348" width="274" height="200"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="note.text" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0F6-j6-UhE">
+                            <rect key="frame" x="0.0" y="1" width="274" height="117.5"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RU7-Ic-X9M">
+                            <rect key="frame" x="0.0" y="130" width="274" height="70"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Begin by adding your first note" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BHd-Dn-Ofz">
+                                    <rect key="frame" x="0.0" y="0.0" width="274" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EWX-Go-vLN">
+                                    <rect key="frame" x="107" y="35" width="60" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="60" id="0af-zm-go6"/>
+                                        <constraint firstAttribute="height" constant="35" id="iJ2-dT-EO1"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
+                                    <state key="normal" title="Add">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1.5"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="addNote:" destination="iN0-l3-epB" eventType="touchUpInside" id="PfV-uC-CUr"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="BHd-Dn-Ofz" firstAttribute="leading" secondItem="RU7-Ic-X9M" secondAttribute="leading" id="BeK-9z-Z9h"/>
+                                <constraint firstItem="BHd-Dn-Ofz" firstAttribute="top" secondItem="RU7-Ic-X9M" secondAttribute="top" id="FgQ-JG-ZCw"/>
+                                <constraint firstAttribute="trailing" secondItem="BHd-Dn-Ofz" secondAttribute="trailing" id="Uh8-Qg-f0z"/>
+                                <constraint firstItem="EWX-Go-vLN" firstAttribute="top" secondItem="BHd-Dn-Ofz" secondAttribute="bottom" constant="5" id="d7a-g4-bn0"/>
+                                <constraint firstAttribute="bottom" secondItem="EWX-Go-vLN" secondAttribute="bottom" id="gAT-Md-vY0"/>
+                                <constraint firstItem="EWX-Go-vLN" firstAttribute="centerX" secondItem="RU7-Ic-X9M" secondAttribute="centerX" id="hdt-pc-vZD"/>
+                                <constraint firstAttribute="height" constant="70" id="t8J-q4-sbT"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="0F6-j6-UhE" secondAttribute="trailing" id="5ty-05-En2"/>
+                        <constraint firstAttribute="trailing" secondItem="RU7-Ic-X9M" secondAttribute="trailing" id="DOx-Dn-KBb"/>
+                        <constraint firstItem="0F6-j6-UhE" firstAttribute="leading" secondItem="HNp-NG-8Gf" secondAttribute="leading" id="DoU-Ee-RHz"/>
+                        <constraint firstAttribute="bottom" secondItem="RU7-Ic-X9M" secondAttribute="bottom" id="E3b-kz-Vfl"/>
+                        <constraint firstItem="0F6-j6-UhE" firstAttribute="top" secondItem="HNp-NG-8Gf" secondAttribute="top" id="Jn6-vN-b2N"/>
+                        <constraint firstItem="RU7-Ic-X9M" firstAttribute="leading" secondItem="HNp-NG-8Gf" secondAttribute="leading" id="kVk-M1-XVq"/>
+                        <constraint firstAttribute="height" constant="200" id="o0H-N9-uLR"/>
+                        <constraint firstItem="RU7-Ic-X9M" firstAttribute="top" secondItem="0F6-j6-UhE" secondAttribute="bottom" constant="10" id="xrm-JD-5sK"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="HNp-NG-8Gf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="70" id="HD4-Ke-zdK"/>
+                <constraint firstItem="HNp-NG-8Gf" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="NL6-Lt-mNJ"/>
+                <constraint firstItem="HNp-NG-8Gf" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="qxS-H8-hvo"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HNp-NG-8Gf" secondAttribute="trailing" constant="70" id="rTI-by-abn"/>
+            </constraints>
+            <point key="canvasLocation" x="-280" y="119"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="note.text" catalog="system" width="128" height="106"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
