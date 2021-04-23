@@ -1,0 +1,7 @@
+use_frameworks!
+
+target 'SmartNotepad' do
+
+ pod 'RealmSwift'
+
+end
