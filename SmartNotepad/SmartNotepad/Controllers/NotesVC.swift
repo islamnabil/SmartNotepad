@@ -14,20 +14,27 @@ class NotesVC: UIViewController {
     
     //MARK:- IBOutlets
     @IBOutlet weak var notesTableView: UITableView!
+    @IBOutlet weak var addNoteButton: UIBarButtonItem!
     
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNoteTable()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        notes.count == 0 ? setupEmptyNotesView() : setupNonEmptyNotesView()
+    }
     
+    //MARK:- IBActions
+    @IBAction func addNote(_ sender: Any) {
+        pushNoteDetailsVC()
+    }
     
     //MARK:- Private Methods
     fileprivate func configureNoteTable() {
         notesTableView.register(UINib(nibName: "NoteTableCell", bundle: nil), forCellReuseIdentifier: "NoteTableCell")
         notesTableView.delegate = self
         notesTableView.dataSource = self
-        notes.count == 0 ? setupEmptyNotesView() : setupNonEmptyNotesView()
     }
     
     fileprivate func createAddNoteView() -> AddNoteView {
@@ -37,13 +44,13 @@ class NotesVC: UIViewController {
     }
     
     fileprivate func setupEmptyNotesView(){
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         notesTableView.backgroundView = createAddNoteView()
         notesTableView.separatorStyle = .none
     }
     
     fileprivate func setupNonEmptyNotesView(){
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         notesTableView.backgroundView = nil
         notesTableView.separatorStyle = .singleLine
     }
@@ -66,7 +73,7 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       return 65
+        return 65
     }
     
 }
@@ -74,7 +81,7 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource{
 // MARK: - AddNoteView Delegate
 extension NotesVC: AddNoteViewDelegate {
     func addNoteButtonAction() {
-        
+        pushNoteDetailsVC()
     }
 }
 

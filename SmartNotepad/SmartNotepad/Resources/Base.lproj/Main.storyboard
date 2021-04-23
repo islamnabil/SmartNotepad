@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3ku-iS-yRj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="f6q-Wd-P50">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -30,8 +30,15 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oKq-X5-ptg" secondAttribute="bottom" id="ywO-hL-zfy"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Notes" id="FF4-SN-6qA"/>
+                    <navigationItem key="navigationItem" title="Notes" id="FF4-SN-6qA">
+                        <barButtonItem key="rightBarButtonItem" title="Add Note" id="N95-oe-gBe">
+                            <connections>
+                                <action selector="addNote:" destination="BYZ-38-t0r" id="Ewh-vs-eeA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="addNoteButton" destination="N95-oe-gBe" id="jFh-OU-9fL"/>
                         <outlet property="notesTableView" destination="oKq-X5-ptg" id="HKc-Ry-Idy"/>
                     </connections>
                 </viewController>

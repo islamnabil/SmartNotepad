@@ -22,23 +22,29 @@ class NoteDetailsVC: UIViewController {
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         super.viewDidLoad()
         setupViews()
     }
+
+
     
     // MARK: - Private Methods
     fileprivate func setupViews(){
+        self.navigationController?.navigationBar.isHidden = false
         noteBodyTextView.delegate = self
         noteBodyTextView.textColor = UIColor.lightGray
         noteTitleTextField.attributedPlaceholder = NSAttributedString(string: "Note Title Here",attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
-        if note != nil {
+        if note != NoteModel() {
             setNoteDetails()
         }
     }
     
     fileprivate func setNoteDetails(){
         noteTitleTextField.text = note?.title
-        noteBodyTextView.text = note?.body
+        if  note?.body != "" {
+            noteBodyTextView.text = note?.body
+        }
         if note?.locationAddress != "" {
             setAddress(address: note?.locationAddress ?? "")
         }
@@ -106,7 +112,11 @@ class NoteDetailsVC: UIViewController {
     
     // MARK: - IBActions
     @IBAction func saveNote(_ sender: Any) {
-        
+        if noteTitleTextField.text?.isEmpty ?? false || noteBodyTextView.text.isEmpty {
+            let alert = UIAlertController(title: "Fill all fields", message: "Please fill all fiedls", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     @IBAction func addLocation(_ sender: Any) {
@@ -114,7 +124,7 @@ class NoteDetailsVC: UIViewController {
     }
     
     @IBAction func addPhoto(_ sender: Any) {
-        self.showAlert()
+        showImageSelectionAlert()
     }
     
 }
@@ -159,8 +169,7 @@ extension NoteDetailsVC: CLLocationManagerDelegate {
 extension NoteDetailsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     //Show alert to selected the media source type.
-    private func showAlert() {
-
+    private func showImageSelectionAlert() {
         let alert = UIAlertController(title: "Image Selection", message: "From where you want to pick this image?", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(action: UIAlertAction) in
             self.getImage(fromSourceType: .camera)
