@@ -178,8 +178,8 @@ class NoteDetailsVC: UIViewController {
     @IBAction func deleteNote(_ sender: Any) {
         try! realm.write {
             realm.delete(note ?? NoteModel())
-            self.navigationController?.popViewController(animated: true)
         }
+        self.navigationController?.popViewController(animated: true)
     }
     
     

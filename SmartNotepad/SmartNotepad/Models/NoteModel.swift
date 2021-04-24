@@ -16,4 +16,5 @@ class NoteModel: Object {
   @objc dynamic var locationAddress = ""
   @objc dynamic var image = ""
   @objc dynamic var createdAt = Date()
+  @objc dynamic var distanceFromDevice = 0.0
 }
