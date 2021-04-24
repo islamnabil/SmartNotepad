@@ -68,7 +68,7 @@ class NoteDetailsVC: UIViewController {
         addLocationButton.setTitle(address, for: .normal)
         addLocationButton.setTitleColor(.black, for: .normal)
         if status {
-            self.addLocationButton.titleLabel?.text = address
+            noteAddress = address
         }
     }
     
@@ -244,7 +244,6 @@ extension NoteDetailsVC: UIImagePickerControllerDelegate, UINavigationController
 
         //Check is source type available
         if UIImagePickerController.isSourceTypeAvailable(sourceType) {
-
             let imagePickerController = UIImagePickerController()
             imagePickerController.delegate = self
             imagePickerController.sourceType = sourceType

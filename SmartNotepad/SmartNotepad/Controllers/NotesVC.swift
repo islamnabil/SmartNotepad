@@ -24,14 +24,8 @@ class NotesVC: UIViewController {
         configureNoteTable()
     }
     override func viewWillAppear(_ animated: Bool) {
-        //fetchData()
-        //notesTableView.reloadData()
-        if notes?.count == 0 {
-            setupEmptyNotesView()
-        }else {
-            setupNonEmptyNotesView()
-            setupLocation()
-        }
+        notes?.count ?? 0 == 0 ? setupEmptyNotesView() :  setupNonEmptyNotesView()
+        setupLocation()
     }
     
     //MARK:- IBActions
@@ -88,9 +82,14 @@ class NotesVC: UIViewController {
     fileprivate func sortNotes(location:CLLocation){
         let realm = try! Realm()
         fetchData()
-        notesTableView.reloadData()
         notes = realm.objects(NoteModel.self).sorted(by: [SortDescriptor(keyPath: "latitude", ascending: true),SortDescriptor(keyPath: "createdAt", ascending: false)])
-        notesTableView.reloadData()
+        if notes?.count ?? 0 > 0 {
+            notesTableView.reloadData()
+            setupNonEmptyNotesView()
+        }else {
+            setupEmptyNotesView()
+        }
+      
     }
     
     
