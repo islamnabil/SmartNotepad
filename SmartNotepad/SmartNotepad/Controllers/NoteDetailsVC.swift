@@ -40,7 +40,7 @@ class NoteDetailsVC: UIViewController {
     fileprivate func setupViews(){
         self.navigationController?.navigationBar.isHidden = false
         noteBodyTextView.delegate = self
-        noteBodyTextView.textColor = UIColor.lightGray
+        noteBodyTextView.textColor = .lightGray
         noteTitleTextField.attributedPlaceholder = NSAttributedString(string: "Note Title Here",attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         if note != nil {
             setNoteDetails()
@@ -54,6 +54,7 @@ class NoteDetailsVC: UIViewController {
         noteTitleTextField.text = note?.title
         if  note?.body != "" {
             noteBodyTextView.text = note?.body
+            noteBodyTextView.textColor = .black
         }
         if note?.locationAddress != "" {
             setAddress(status: true, address: note?.locationAddress ?? "")
@@ -99,18 +100,35 @@ class NoteDetailsVC: UIViewController {
     }
     
     fileprivate func addNote(){
-        let newNote = NoteModel()
-        try! realm.write {
-            newNote.title = noteTitleTextField.text ?? ""
-            newNote.body = noteBodyTextView.text ?? ""
-            newNote.image = noteImagePath ?? ""
-            newNote.latitude = noteLat ?? Double()
-            newNote.longitude = noteLong ?? Double()
-            newNote.locationAddress = noteAddress ?? ""
-            newNote.createdAt = Date()
-            realm.add(newNote)
-            self.navigationController?.popViewController(animated: true)
+        if note == nil {  // Add New Note
+            let newNote = NoteModel()
+            try! realm.write {
+                newNote.title = noteTitleTextField.text ?? ""
+                newNote.body = noteBodyTextView.text ?? ""
+                newNote.image = noteImagePath ?? ""
+                newNote.latitude = noteLat ?? Double()
+                newNote.longitude = noteLong ?? Double()
+                newNote.locationAddress = noteAddress ?? ""
+                newNote.createdAt = Date()
+                realm.add(newNote)
+            }
+        }else {  // Edit note
+            let notes = realm.objects(NoteModel.self).filter("createdAt = %@", self.note?.createdAt ?? Date())
+            if let note = notes.first {
+                try! realm.write {
+                    note.title = noteTitleTextField.text ?? ""
+                    note.body = noteBodyTextView.text ?? ""
+                    note.image = noteImagePath ?? ""
+                    note.latitude = noteLat ?? Double()
+                    note.longitude = noteLong ?? Double()
+                    note.locationAddress = noteAddress ?? ""
+                    note.createdAt = Date()
+                }
+            }
         }
+        
+        self.navigationController?.popViewController(animated: true)
+        
     }
     
     // MARK: - showEnableLocationServices
@@ -170,10 +188,10 @@ class NoteDetailsVC: UIViewController {
 // MARK: - UITextViewDelegate
 extension NoteDetailsVC:UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
+        if textView.text == "Note Body Here" && textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = UIColor.black
         }
+        textView.textColor = UIColor.black
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
