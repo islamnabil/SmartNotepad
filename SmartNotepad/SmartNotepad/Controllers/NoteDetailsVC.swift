@@ -13,11 +13,12 @@ class NoteDetailsVC: UIViewController {
     // MARK: - Properties
     fileprivate var note:NoteModel?
     fileprivate var locationManager = CLLocationManager()
+    fileprivate let imagePicker = UIImagePickerController()
+    fileprivate let realm = try! Realm()
     fileprivate var noteLat:Double?
     fileprivate var noteLong:Double?
     fileprivate var noteImagePath:String?
     fileprivate var noteAddress:String?
-    fileprivate let realm = try! Realm()
     
     // MARK: - IBOutlets
     @IBOutlet weak var noteTitleTextField: UITextField!
@@ -42,6 +43,8 @@ class NoteDetailsVC: UIViewController {
         noteBodyTextView.delegate = self
         noteBodyTextView.textColor = .lightGray
         noteTitleTextField.attributedPlaceholder = NSAttributedString(string: "Note Title Here",attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
+        imagePicker.delegate = self
+        
         if note != nil {
             setNoteDetails()
             self.navigationItem.rightBarButtonItems?[1] = trashButton
@@ -60,7 +63,7 @@ class NoteDetailsVC: UIViewController {
             setAddress(status: true, address: note?.locationAddress ?? "")
         }
         if note?.image != "" {
-            setNoteImage(imagePath: URL(string: note?.image ?? "")!)
+            setNoteImage(imagePath: URL(string:note?.image ?? "")!)
         }
     }
     
@@ -74,8 +77,8 @@ class NoteDetailsVC: UIViewController {
     
     fileprivate func setNoteImage(imagePath:URL){
         noteImagePath = imagePath.absoluteString
-        let image = loadImage(fileURL: imagePath)
-        let imageView = UIImageView(image: image)
+        let imageData:NSData = NSData(contentsOf: imagePath)!
+        let imageView = UIImageView(image: UIImage(data: imageData as Data))
         imageView.frame = CGRect(x: 60, y: 10, width: 200, height: 100)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -254,15 +257,14 @@ extension NoteDetailsVC: UIImagePickerControllerDelegate, UINavigationController
     //MARK:- UIImagePickerViewDelegate.
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let imgUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL{
-               let imgName = imgUrl.lastPathComponent
-               let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-               let localPath = documentDirectory?.appending(imgName)
-
-            let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-            let data = image.pngData()! as NSData
-               data.write(toFile: localPath!, atomically: true)
-               let photoURL = URL.init(fileURLWithPath: localPath!)
-            self.setNoteImage(imagePath: photoURL)
+//               let imgName = imgUrl.lastPathComponent
+//               let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+//               let localPath = documentDirectory?.appending(imgName)
+//
+//            let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+//            let data = image.pngData()! as NSData
+//               data.write(toFile: localPath!, atomically: true)
+            self.setNoteImage(imagePath: imgUrl)
            }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -274,6 +276,7 @@ extension NoteDetailsVC: UIImagePickerControllerDelegate, UINavigationController
     
     private func loadImage(fileURL: URL) -> UIImage? {
         do {
+            print(fileURL)
             let imageData = try Data(contentsOf: fileURL)
             return UIImage(data: imageData)
         } catch {

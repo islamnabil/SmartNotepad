@@ -30,7 +30,7 @@ class NoteTableCell: UITableViewCell {
     
     //MARK:- Private Methods
     fileprivate func isHasImage(note:NoteModel) -> Bool {
-        return note.image != ""
+        return note.image != nil
     }
     fileprivate func isHasLocationAddress(note:NoteModel) -> Bool {
         return note.locationAddress != ""

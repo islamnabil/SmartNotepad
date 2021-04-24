@@ -27,11 +27,10 @@ class NotesVC: UIViewController {
         fetchData()
         if notes?.count ?? 0 == 0 {
             setupEmptyNotesView()
-            notesTableView.reloadData()
         }else {
             setupNonEmptyNotesView()
-            setupLocation()
         }
+        notesTableView.reloadData()
     }
     
     //MARK:- IBActions

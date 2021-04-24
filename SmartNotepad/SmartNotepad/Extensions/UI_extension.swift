@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 
 
 struct globalValues {
@@ -236,3 +237,12 @@ class ImageMirror: UIImageView {
 }
 
 
+
+extension UIImageView {
+    
+    func SetImage(link:String) {
+        let url = URL(string:link )
+        self.backgroundColor = #colorLiteral(red: 0.8115878807, green: 0.8115878807, blue: 0.8115878807, alpha: 1)
+        self.sd_setImage(with: url, completed: nil)
+    }
+}
