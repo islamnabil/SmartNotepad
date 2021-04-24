@@ -148,12 +148,12 @@
                                     <constraint firstItem="Jj4-pr-njb" firstAttribute="centerX" secondItem="fVM-Pn-oG8" secondAttribute="centerX" id="4mi-J5-tVV"/>
                                     <constraint firstItem="Jj4-pr-njb" firstAttribute="leading" secondItem="fVM-Pn-oG8" secondAttribute="leading" constant="10" id="A61-uA-YTF"/>
                                     <constraint firstAttribute="trailing" secondItem="Jj4-pr-njb" secondAttribute="trailing" constant="10" id="KeQ-ge-fJb"/>
-                                    <constraint firstAttribute="bottom" secondItem="tba-EK-Rp9" secondAttribute="bottom" id="LcT-fL-E6t"/>
                                     <constraint firstItem="tba-EK-Rp9" firstAttribute="top" secondItem="Jj4-pr-njb" secondAttribute="bottom" constant="20" id="TcE-Sq-CCy"/>
                                     <constraint firstItem="2dL-ZF-wht" firstAttribute="top" secondItem="fVM-Pn-oG8" secondAttribute="top" constant="15" id="YLV-tV-0Kd"/>
                                     <constraint firstItem="Jj4-pr-njb" firstAttribute="top" secondItem="2dL-ZF-wht" secondAttribute="bottom" id="Zf1-82-moD"/>
                                     <constraint firstItem="2dL-ZF-wht" firstAttribute="leading" secondItem="fVM-Pn-oG8" secondAttribute="leading" constant="10" id="a7m-EK-wTx"/>
                                     <constraint firstAttribute="trailing" secondItem="tba-EK-Rp9" secondAttribute="trailing" id="aLp-oe-AGt"/>
+                                    <constraint firstAttribute="bottom" secondItem="tba-EK-Rp9" secondAttribute="bottom" id="maa-uF-sHR"/>
                                     <constraint firstItem="tba-EK-Rp9" firstAttribute="leading" secondItem="fVM-Pn-oG8" secondAttribute="leading" id="sj1-PO-U0p"/>
                                     <constraint firstItem="2dL-ZF-wht" firstAttribute="centerX" secondItem="fVM-Pn-oG8" secondAttribute="centerX" id="xBy-41-3jY"/>
                                 </constraints>
@@ -169,11 +169,19 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="V9J-Lh-qbo">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="PWL-Ck-jfz">
-                            <connections>
-                                <action selector="saveNote:" destination="3ku-iS-yRj" id="0CD-Ie-R1e"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Save" id="PWL-Ck-jfz">
+                                <connections>
+                                    <action selector="saveNote:" destination="3ku-iS-yRj" id="0CD-Ie-R1e"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Delete" id="lDy-qQ-h7D">
+                                <color key="tintColor" systemColor="systemPinkColor"/>
+                                <connections>
+                                    <action selector="deleteNote:" destination="3ku-iS-yRj" id="UDG-cD-Ib4"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="addLocationButton" destination="VT1-3m-1mc" id="djY-kh-4Va"/>
@@ -181,6 +189,7 @@
                         <outlet property="addPhotoViewHeightContraint" destination="Frc-45-4Fh" id="1yX-mP-865"/>
                         <outlet property="noteBodyTextView" destination="Jj4-pr-njb" id="Gnv-rG-9b6"/>
                         <outlet property="noteTitleTextField" destination="2dL-ZF-wht" id="DdE-sD-IFy"/>
+                        <outlet property="trashButton" destination="lDy-qQ-h7D" id="bdu-ob-2HT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lgw-99-R1m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -235,6 +244,9 @@
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

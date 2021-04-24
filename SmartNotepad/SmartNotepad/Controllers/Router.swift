@@ -29,7 +29,7 @@ extension VCs: StoryboardViewController {
 }
 
 extension UIViewController {
-    func pushNoteDetailsVC(note:NoteModel = NoteModel()) {
+    func pushNoteDetailsVC(note:NoteModel? = nil) {
         let vc = UIStoryboard(name: VCs.NoteDetailsVC.storyboard, bundle: nil).instantiateViewController(withIdentifier: String(describing: NoteDetailsVC.self)) as! NoteDetailsVC
         vc.setData(note: note)
         self.navigationController?.pushViewController(vc, animated: true)

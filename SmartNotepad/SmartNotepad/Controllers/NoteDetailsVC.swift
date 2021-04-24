@@ -16,6 +16,7 @@ class NoteDetailsVC: UIViewController {
     fileprivate var noteLat:Double?
     fileprivate var noteLong:Double?
     fileprivate var noteImagePath:String?
+    fileprivate var noteAddress:String?
     fileprivate let realm = try! Realm()
     
     // MARK: - IBOutlets
@@ -24,6 +25,7 @@ class NoteDetailsVC: UIViewController {
     @IBOutlet weak var addPhotoViewHeightContraint: NSLayoutConstraint!
     @IBOutlet weak var addPhotoView: UIView!
     @IBOutlet weak var addLocationButton: UIButton!
+    @IBOutlet weak var trashButton: UIBarButtonItem!
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -40,8 +42,11 @@ class NoteDetailsVC: UIViewController {
         noteBodyTextView.delegate = self
         noteBodyTextView.textColor = UIColor.lightGray
         noteTitleTextField.attributedPlaceholder = NSAttributedString(string: "Note Title Here",attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
-        if note != NoteModel() {
+        if note != nil {
             setNoteDetails()
+            self.navigationItem.rightBarButtonItems?[1] = trashButton
+        }else {
+            self.navigationItem.rightBarButtonItems?[1] = UIBarButtonItem()
         }
     }
     
@@ -51,16 +56,19 @@ class NoteDetailsVC: UIViewController {
             noteBodyTextView.text = note?.body
         }
         if note?.locationAddress != "" {
-            setAddress(address: note?.locationAddress ?? "")
+            setAddress(status: true, address: note?.locationAddress ?? "")
         }
         if note?.image != "" {
             setNoteImage(imagePath: URL(string: note?.image ?? "")!)
         }
     }
     
-    fileprivate func setAddress(address:String){
+    fileprivate func setAddress(status:Bool,address:String){
         addLocationButton.setTitle(address, for: .normal)
         addLocationButton.setTitleColor(.black, for: .normal)
+        if status {
+            self.addLocationButton.titleLabel?.text = address
+        }
     }
     
     fileprivate func setNoteImage(imagePath:URL){
@@ -91,15 +99,16 @@ class NoteDetailsVC: UIViewController {
     }
     
     fileprivate func addNote(){
+        let newNote = NoteModel()
         try! realm.write {
-            note?.title = noteTitleTextField.text ?? ""
-            note?.body = noteBodyTextView.text ?? ""
-            note?.image = noteImagePath ?? ""
-            note?.latitude = noteLat ?? Double()
-            note?.longitude = noteLong ?? Double()
-            note?.locationAddress = addLocationButton.titleLabel?.text ?? ""
-            note?.createdAt = Date()
-            realm.add(note ?? NoteModel())
+            newNote.title = noteTitleTextField.text ?? ""
+            newNote.body = noteBodyTextView.text ?? ""
+            newNote.image = noteImagePath ?? ""
+            newNote.latitude = noteLat ?? Double()
+            newNote.longitude = noteLong ?? Double()
+            newNote.locationAddress = noteAddress ?? ""
+            newNote.createdAt = Date()
+            realm.add(newNote)
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -125,7 +134,7 @@ class NoteDetailsVC: UIViewController {
     
     
     // MARK: - Public Methods
-    func setData(note:NoteModel){
+    func setData(note:NoteModel?){
         self.note = note
     }
     
@@ -147,6 +156,14 @@ class NoteDetailsVC: UIViewController {
     @IBAction func addPhoto(_ sender: Any) {
         showImageSelectionAlert()
     }
+    
+    @IBAction func deleteNote(_ sender: Any) {
+        try! realm.write {
+            realm.delete(note ?? NoteModel())
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
     
 }
 
@@ -176,14 +193,14 @@ extension NoteDetailsVC: CLLocationManagerDelegate {
                 if placemarks?.count ?? 0 > 0 {
                     self.noteLat = locations.first?.coordinate.latitude ?? Double()
                     self.noteLong = locations.first?.coordinate.longitude ?? Double()
-                    self.setAddress(address: "\(placemarks?[0].locality ?? ""), \(placemarks?[0].country ?? "")")
+                    self.setAddress(status: true, address: "\(placemarks?[0].locality ?? ""), \(placemarks?[0].country ?? "")")
                 }
             }
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        self.setAddress(address: "Failed to fetch address")
+        self.setAddress(status: false, address: "Failed to fetch address")
     }
     
 }

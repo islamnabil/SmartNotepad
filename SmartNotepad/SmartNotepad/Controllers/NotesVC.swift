@@ -24,7 +24,8 @@ class NotesVC: UIViewController {
         configureNoteTable()
     }
     override func viewWillAppear(_ animated: Bool) {
-        fetchData()
+        //fetchData()
+        //notesTableView.reloadData()
         if notes?.count == 0 {
             setupEmptyNotesView()
         }else {
@@ -42,7 +43,6 @@ class NotesVC: UIViewController {
     fileprivate func fetchData(){
         notes = try! Realm().objects(NoteModel.self)
             .sorted(byKeyPath: "createdAt", ascending: false)
-        notesTableView.reloadData()
     }
     
     fileprivate func configureNoteTable() {
@@ -78,7 +78,7 @@ class NotesVC: UIViewController {
             case .authorizedAlways, .authorizedWhenInUse, .notDetermined:
                 locationManager.delegate = self
                 locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                locationManager.startUpdatingLocation()
+                locationManager.requestLocation()
             @unknown default:
                 break
             }
@@ -86,7 +86,11 @@ class NotesVC: UIViewController {
     }
     
     fileprivate func sortNotes(location:CLLocation){
-        
+        let realm = try! Realm()
+        fetchData()
+        notesTableView.reloadData()
+        notes = realm.objects(NoteModel.self).sorted(by: [SortDescriptor(keyPath: "latitude", ascending: true),SortDescriptor(keyPath: "createdAt", ascending: false)])
+        notesTableView.reloadData()
     }
     
     
@@ -132,4 +136,7 @@ extension NotesVC: CLLocationManagerDelegate {
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
+    }
 }
