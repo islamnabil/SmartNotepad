@@ -10,7 +10,7 @@
 
 
 ## Screenshots
-![Example screenshot]("https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShoots/1.png")
+<img src="https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShoots/1.png" width="250" height="500"> <img src="https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShoots/2.png" width="250" height="500"> <img src="https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShoots/3.png" width="250" height="500"> 
 
 ## Requirements
 * Xcode 10.2+
