@@ -10,7 +10,7 @@
 
 
 ## Screenshots
-![Example screenshot]()
+![Example screenshot]("https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShoots/1.png")
 
 ## Requirements
 * Xcode 10.2+
