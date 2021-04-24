@@ -4,6 +4,4 @@ target 'SmartNotepad' do
 
  pod 'RealmSwift'
  pod 'IQKeyboardManagerSwift'
- pod 'SDWebImage'
-
 end
