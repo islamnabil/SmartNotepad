@@ -10,7 +10,7 @@
 
 
 ## Screenshots
-<img src="https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShoots/1.png" width="250" height="370"> <img src="https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShoots/2.png" width="250" height="370"> <img src="https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShoots/3.png" width="250" height="370"> 
+<img src="https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShots/1.png" width="250" height="370"> <img src="https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShots/2.png" width="250" height="370"> <img src="https://github.com/islamnabil/SmartNotepad/blob/main/ScreenShots/3.png" width="250" height="370"> 
 
 ## Requirements
 * Xcode 10.2+
